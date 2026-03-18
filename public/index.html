@@ -251,30 +251,29 @@
     </section>
 
     <!-- contact section design -->
-  <section class="contact" id="contact">
+<section class="contact" id="contact">
     <h2 class="heading">Contact <span>Me</span></h2>
-<form id="contactForm">
-  <div class="row">
-    <div class="col"><input id="name" placeholder="Full Name" /></div>
-    <div class="col"><input id="email" placeholder="Email" /></div>
-  </div>
+    
+    <form id="contactForm">
+        <div class="row">
+            <div class="col"><input type="text" id="name" placeholder="Full Name" required /></div>
+            <div class="col"><input type="email" id="email" placeholder="Email" required /></div>
+        </div>
 
-  <div class="row">
-    <div class="col"><input id="phone" placeholder="Mobile Number" /></div>
-    <div class="col"><input id="subject" placeholder="Email Subject" /></div>
-  </div>
+        <div class="row">
+            <div class="col"><input type="tel" id="phone" placeholder="Mobile Number" /></div>
+            <div class="col"><input type="text" id="subject" placeholder="Email Subject" /></div>
+        </div>
 
-  <div class="row">
-    <div class="col full"><textarea id="message" placeholder="Your Message"></textarea></div>
-  </div>
+        <div class="row">
+            <div class="col full"><textarea id="message" placeholder="Your Message" required></textarea></div>
+        </div>
 
-  <div id="formMessage" class="form-message"></div>
+        <div id="formMessage" class="form-message"></div>
 
-  <button type="submit">Submit</button>
-</form>
-
-    <div id="formMessage" style="color: white; margin-top: 1rem;"></div>
-  </section>
+        <button type="submit">Submit</button>
+    </form>
+</section>
 
     <!-- footer design -->
     <footer class="footer">
