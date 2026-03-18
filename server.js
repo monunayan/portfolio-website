@@ -105,6 +105,10 @@ app.post('/api/contact', async (req, res) => {
     const contactDoc = new Contact({ name, email, phone, subject, message });
     await contactDoc.save();
     console.log('New contact saved:', contactDoc._id);
+    console.log('✅ New contact saved with ID:', contactDoc._id);
+    console.log('📁 Collection name:', Contact.collection.name);
+    console.log('🗄️ Database name:', mongoose.connection.db.databaseName);
+    console.log('🔌 Full connection string:', mongoose.connection.client.s.url);
 
     // Attempt to send email notification (non-fatal)
     const emailOk = await sendNotificationEmail(contactDoc);
