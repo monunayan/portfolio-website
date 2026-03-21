@@ -777,6 +777,9 @@ section:nth-child(odd) .animate.scroll,
 
     .home {
         padding: 0 4%;
+        background: url('images/Home2.jpg') no-repeat;
+        background-size: cover;
+        background-position: center;
     }
 
     .footer {
@@ -920,6 +923,9 @@ section:nth-child(odd) .animate.scroll,
 @media (max-width: 371px) {
     .home {
         justify-content: center;
+        background: url('images/Home2.jpg') no-repeat;
+        background-size: cover;
+        background-position: center;
     }
 
     .home-content {
