@@ -15,7 +15,8 @@ app.use(helmet({
       "script-src": ["'self'", "'unsafe-inline'", "https://unpkg.com"],
       "img-src": ["'self'", "data:", "https:"]
     }
-  }
+  },
+  referrerPolicy: false // Allows FormSubmit to see your website's URL
 }));
 app.use(express.json());
 app.use(cors());
