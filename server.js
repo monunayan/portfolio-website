@@ -7,7 +7,16 @@ const cors = require('cors');
 const path = require('path');
 
 const app = express();
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    useDefaults: true,
+    directives: {
+      "form-action": ["'self'", "https://formsubmit.co"],
+      "script-src": ["'self'", "'unsafe-inline'", "https://unpkg.com"],
+      "img-src": ["'self'", "data:", "https:"]
+    }
+  }
+}));
 app.use(express.json());
 app.use(cors());
 
@@ -49,7 +58,8 @@ app.post('/api/contact', async (req,res)=>{
   if(!name||!email||!message) return res.status(400).json({error:"required fields missing"});
   try {
     const newContact = await Contact.create(req.body);
-    await sendNotificationEmail(req.body).catch(err => console.error("Email error:", err));
+    // Render Free Tier blocks email ports (587, 465). SMTP will timeout.
+    // Email sending is now handled securely from the Frontend via FormSubmit AJAX.
     res.json({success: true, message: "Saved"});
   } catch(error) {
     res.status(500).json({error: "Server Error"});
