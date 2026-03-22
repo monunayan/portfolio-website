@@ -14,7 +14,8 @@ let navLinks = document.querySelectorAll('header nav a');
 window.onscroll = () => {
     sections.forEach(sec => {
         let top = window.scrollY;
-        let offset = sec.offsetTop - 100;
+        // Trigger the animation slightly earlier when the user scrolls down
+        let offset = sec.offsetTop - (window.innerHeight / 1.2);
         let height = sec.offsetHeight;
         let id = sec.getAttribute('id');
 
@@ -47,47 +48,4 @@ window.onscroll = () => {
 
     footer.classList.toggle('show-animate', this.innerHeight + this.scrollY >= document.scrollingElement.scrollHeight);
 }
-document.addEventListener('DOMContentLoaded', function() {
-  const form = document.getElementById('contactForm');
-  const msgEl = document.getElementById('formMessage');
-
-  if (form && msgEl) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      msgEl.style.color = 'white';
-      msgEl.textContent = 'Sending...';
-
-      const payload = {
-        name: document.getElementById('name').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        phone: document.getElementById('phone') ? document.getElementById('phone').value.trim() : '',
-        subject: document.getElementById('subject') ? document.getElementById('subject').value.trim() : '',
-        message: document.getElementById('message').value.trim()
-      };
-
-      try {
-        const res = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        const data = await res.json();
-        if (data.success || data.message === "Saved") {
-          msgEl.style.color = 'lightgreen';
-          msgEl.textContent = data.message || 'Message sent successfully!';
-          form.reset();
-        } else {
-          msgEl.style.color = 'tomato';
-          msgEl.textContent = data.error || 'Something went wrong.';
-        }
-      } catch (err) {
-        console.error(err);
-        msgEl.style.color = 'tomato';
-        msgEl.textContent = 'Network error. Make sure your local backend is running, or check connection.';
-      }
-
-      setTimeout(() => { msgEl.textContent = ''; }, 6000);
-    });
-  }
-});
+// Native form submission will now be handled directly by HTML FormSubmit action

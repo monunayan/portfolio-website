@@ -22,35 +22,40 @@
         <div style="text-align: center; margin-bottom: 4rem;">
             <p style="font-size: 1.8rem; color: var(--text-color);">I'm always open to discussing product design work or partnership opportunities.</p>
             <div class="home-sci" style="position: relative; width: 100%; justify-content: center; gap: 2rem; margin-top: 3rem; bottom: auto;">
-                  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=monunayan22@gmail.com" target="_blank" title="Email Me in Gmail"><i class='bx bx-envelope'></i></a>
-                <a href="https://www.linkedin.com/feed/" target="_blank" title="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=monunayan22@gmail.com" target="_blank" title="Email Me in Gmail"><i class='bx bx-envelope'></i></a>
+                <a href="https://www.linkedin.com/in/monu-nayan27/" target="_blank" title="LinkedIn"><i class='bx bxl-linkedin'></i></a>
                 <a href="https://wa.me/919508052317" target="_blank" title="WhatsApp"><i class='bx bxl-whatsapp'></i></a>
                 <a href="https://www.instagram.com/im.mr.nayan?igsh=czFod2lrazJ2bG12" target="_blank" title="Instagram"><i class='bx bxl-instagram'></i></a>
             </div>
         </div>
 
-        <form action="https://formsubmit.co/monunayan22@gmail.com" method="POST" style="max-width: 60rem;">
-            <!-- Disable Captcha (Optional) -->
+        <form action="https://formsubmit.co/monunayan22@gmail.com" method="POST" id="contactForm" style="max-width: 60rem;">
+            <!-- Honey pot field and settings -->
             <input type="hidden" name="_captcha" value="false">
-            
+            <input type="hidden" name="_subject" value="New submission from Portfolio!">
+
             <div class="input-box">
                 <div class="input-field">
-                    <input type="text" name="name" placeholder="Full Name" required>
+                    <input name="name" id="name" type="text" placeholder="Full Name" required>
                     <span class="focus"></span>
                 </div>
                 <div class="input-field">
-                    <input type="email" name="email" placeholder="Email Address" required>
+                    <input name="email" id="email" type="email" placeholder="Email Address" required>
                     <span class="focus"></span>
                 </div>
             </div>
+            <!-- Additional hidden fields to match the email format -->
+            <input name="phone" id="phone" type="hidden" value="">
+            <input name="subject" id="subject" type="hidden" value="From Let's Talk">
             <div class="textarea-field">
-                <textarea name="message" cols="30" rows="10" placeholder="Tell me about your project..." required></textarea>
+                <textarea name="message" id="message" cols="30" rows="10" placeholder="Tell me about your project..." required></textarea>
                 <span class="focus"></span>
             </div>
             <div class="btn-box btns" style="width: 100%; justify-content: center;">
                 <button type="submit" class="btn" style="width: 25rem;">Send Message</button>
             </div>
         </form>
+        <div id="formMessage" style="color: white; margin-top: 1rem; text-align: center;"></div>
     </section>
 
     <!-- footer design -->
