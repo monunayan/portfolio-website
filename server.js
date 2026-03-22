@@ -1,155 +1,62 @@
-// server.js (copy this file into your project root)
-require('dotenv').config();               // LOAD .env (must be first)
+
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cors = require('cors');
 const path = require('path');
-const nodemailer = require('nodemailer');
 
 const app = express();
 app.use(helmet());
 app.use(express.json());
 app.use(cors());
 
-// --- MONGODB CONNECT ---
 const MONGO = process.env.MONGO_URI;
-if (!MONGO) {
-  console.error('FATAL: MONGO_URI is not set in .env');
-  process.exit(1);
-}
+mongoose.connect(MONGO, { useNewUrlParser:true, useUnifiedTopology:true })
+  .then(()=>console.log('MongoDB connected'))
+  .catch(err=>console.log(err));
 
-mongoose.connect(MONGO, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => {
-    console.error('Mongo connect error:', err);
-    process.exit(1); // stop process if DB is not connectable
-  });
-
-// --- MONGOOSE MODEL ---
 const Contact = mongoose.model('Contact', new mongoose.Schema({
-  name: String,
-  email: String,
-  phone: String,
-  subject: String,
-  message: String,
-  createdAt: { type: Date, default: Date.now }
+  name:String, email:String, phone:String, subject:String, message:String,
+  createdAt:{ type:Date, default:Date.now }
 }));
 
-// --- EMAIL HELPER ---
-// Supports either SMTP_* (preferred) or fallback to EMAIL_USER/EMAIL_PASS (Gmail app password)
+const nodemailer = require('nodemailer');
+
 async function sendNotificationEmail(contactDoc) {
-  const smtpHost = process.env.SMTP_HOST || null;
-  const smtpPort = process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : null;
-  const smtpUser = process.env.SMTP_USER || process.env.EMAIL_USER;
-  const smtpPass = process.env.SMTP_PASS || process.env.EMAIL_PASS;
-  const notifyTo = process.env.NOTIFY_EMAIL || smtpUser;
-
-  if (!smtpUser || !smtpPass) {
-    console.warn('sendNotificationEmail: SMTP credentials missing - skipping email');
-    return false;
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    console.log("Email skipped: SMTP_USER or SMTP_PASS not set in .env");
+    return;
   }
+  const transporter = nodemailer.createTransport({
+    service: 'gmail', // Simplest way to use Gmail
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS // Should be a 16-character App Password, not normal password
+    }
+  });
 
-  let transporterConfig;
-  if (smtpHost && smtpPort) {
-    transporterConfig = {
-      host: smtpHost,
-      port: smtpPort,
-      secure: smtpPort === 465, // true for 465, false for 587/others
-      auth: { user: smtpUser, pass: smtpPass }
-    };
-  } else {
-    // fallback to Gmail service (works with App Password)
-    transporterConfig = {
-      service: 'gmail',
-      auth: { user: smtpUser, pass: smtpPass }
-    };
-  }
-
-  try {
-    const transporter = nodemailer.createTransport(transporterConfig);
-
-    const mailOptions = {
-      from: `"Portfolio Contact" <${smtpUser}>`,
-      to: notifyTo,
-      subject: `New contact from ${contactDoc.name || 'Website'}`,
-      text:
-        `You have a new message from your portfolio contact form.\n\n` +
-        `Name: ${contactDoc.name || ''}\n` +
-        `Email: ${contactDoc.email || ''}\n` +
-        `Phone: ${contactDoc.phone || ''}\n` +
-        `Subject: ${contactDoc.subject || ''}\n\n` +
-        `Message:\n${contactDoc.message || ''}\n`
-    };
-
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent:', info.messageId || info.response || '(no id)');
-    return true;
-  } catch (err) {
-    console.error('sendNotificationEmail error:', err && err.message ? err.message : err);
-    return false;
-  }
+  await transporter.sendMail({
+    from: `"Portfolio Contact" <${process.env.SMTP_USER}>`,
+    to: process.env.NOTIFY_EMAIL || process.env.SMTP_USER,
+    subject: `New contact from ${contactDoc.name}`,
+    text: `Name: ${contactDoc.name}\nEmail: ${contactDoc.email}\nPhone: ${contactDoc.phone}\nSubject: ${contactDoc.subject}\n\nMessage:\n${contactDoc.message}`
+  });
 }
 
-// --- API: contact submit ---
-app.post('/api/contact', async (req, res) => {
+app.post('/api/contact', async (req,res)=>{
+  const {name,email,message} = req.body;
+  if(!name||!email||!message) return res.status(400).json({error:"required fields missing"});
   try {
-    const { name, email, phone, subject, message } = req.body || {};
-
-    // Basic validation
-    if (!name || !email || !message) {
-      return res.status(400).json({ success: false, message: 'Name, email and message are required' });
-    }
-
-    // Save to DB
-    const contactDoc = new Contact({ name, email, phone, subject, message });
-    await contactDoc.save();
-    console.log('New contact saved:', contactDoc._id);
-    console.log('✅ New contact saved with ID:', contactDoc._id);
-    console.log('📁 Collection name:', Contact.collection.name);
-    console.log('🗄️ Database name:', mongoose.connection.db.databaseName);
-    console.log('🔌 Full connection string:', mongoose.connection.client.s.url);
-
-    // Attempt to send email notification (non-fatal)
-    const emailOk = await sendNotificationEmail(contactDoc);
-
-    if (emailOk) {
-      return res.json({ success: true, message: 'Saved & email sent' });
-    } else {
-      // saved but email failed
-      return res.status(200).json({ success: true, message: 'Saved but email failed (check logs)' });
-    }
-  } catch (err) {
-    console.error('POST /api/contact error:', err);
-    return res.status(500).json({ success: false, message: 'Server error' });
+    const newContact = await Contact.create(req.body);
+    await sendNotificationEmail(req.body).catch(err => console.error("Email error:", err));
+    res.json({success: true, message: "Saved"});
+  } catch(error) {
+    res.status(500).json({error: "Server Error"});
   }
 });
 
-// --- Serve frontend static files (your public folder) ---
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname,"public")));
 
-// Fallback for SPA (optional) - uncomment if you want index.html for all routes
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'public', 'index.html'));
-// });
-
-// --- Start server ---
-const PORT = Number(process.env.PORT) || 5000;
-app.listen(PORT, () => {
-  console.log('Server running on', PORT);
-});
-
-/*
-  .env expected variables (examples):
-  MONGO_URI=...                  // required
-  PORT=5000                      // optional
-  EMAIL_USER=youremail@gmail.com // or SMTP_USER
-  EMAIL_PASS=your_app_password   // or SMTP_PASS
-  NOTIFY_EMAIL=youremail@gmail.com
-
-  Optional custom SMTP:
-  SMTP_HOST=smtp.example.com
-  SMTP_PORT=587
-  SMTP_USER=...
-  SMTP_PASS=...
-*/
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, ()=>console.log("Server running on", PORT));
