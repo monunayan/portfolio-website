@@ -60,11 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Check if we just came back from a successful form submission
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('submitted') === 'true') {
+    if (window.location.search.includes('submitted=true')) {
         showSuccessPopup();
-        // Remove the parameter from the URL so it doesn't show again on refresh
-        window.history.replaceState({}, document.title, window.location.pathname);
+        // Remove the parameter from the URL gracefully
+        setTimeout(() => {
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }, 1000);
     }
 });
 
