@@ -49,3 +49,11 @@ window.onscroll = () => {
     footer.classList.toggle('show-animate', this.innerHeight + this.scrollY >= document.scrollingElement.scrollHeight);
 }
 // Native form submission will now be handled directly by HTML FormSubmit action
+// Auto-Redirect back to portfolio instead of stopping at FormSubmit's thank you page
+document.addEventListener('DOMContentLoaded', () => {
+    const nextUrlInputs = document.querySelectorAll('input[name="_next"]');
+    nextUrlInputs.forEach(input => {
+        // Automatically sets the redirect return URL to whatever the exact live link is
+        input.value = window.location.href; 
+    });
+});
