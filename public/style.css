@@ -994,3 +994,35 @@ section:nth-child(odd) .animate.scroll,
         width: 0;
     }
 }
+
+/* Success Popup Notification */
+.success-popup {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-color);
+    color: var(--text-color);
+    padding: 1.5rem 2.5rem;
+    border-radius: 5rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    box-shadow: 0 0 .5rem var(--main-color), 0 0 1.5rem var(--main-color);
+    border: .2rem solid var(--main-color);
+    z-index: 9999;
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.success-popup i {
+    font-size: 2.8rem;
+    color: #4CAF50; /* Green checkmark */
+}
+
+.success-popup.show {
+    bottom: 5rem;
+    opacity: 1;
+}

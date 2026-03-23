@@ -48,12 +48,40 @@ window.onscroll = () => {
 
     footer.classList.toggle('show-animate', this.innerHeight + this.scrollY >= document.scrollingElement.scrollHeight);
 }
+
 // Native form submission will now be handled directly by HTML FormSubmit action
 // Auto-Redirect back to portfolio instead of stopping at FormSubmit's thank you page
 document.addEventListener('DOMContentLoaded', () => {
     const nextUrlInputs = document.querySelectorAll('input[name="_next"]');
     nextUrlInputs.forEach(input => {
-        // Automatically sets the redirect return URL to whatever the exact live link is
-        input.value = window.location.href; 
+        // Append a success parameter to the URL so we can show a popup later!
+        const currentUrl = window.location.href.split('?')[0];
+        input.value = currentUrl + "?submitted=true"; 
     });
+
+    // Check if we just came back from a successful form submission
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('submitted') === 'true') {
+        showSuccessPopup();
+        // Remove the parameter from the URL so it doesn't show again on refresh
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
 });
+
+function showSuccessPopup() {
+    const popup = document.createElement('div');
+    popup.className = 'success-popup';
+    popup.innerHTML = `<i class='bx bx-check-circle'></i> Message Sent Successfully!`;
+    document.body.appendChild(popup);
+
+    // Slide it up smoothly
+    setTimeout(() => {
+        popup.classList.add('show');
+    }, 100);
+
+    // Slide it back down and remove after 4.5 seconds
+    setTimeout(() => {
+        popup.classList.remove('show');
+        setTimeout(() => popup.remove(), 500); // clear from memory
+    }, 4500);
+}
