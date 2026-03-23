@@ -54,9 +54,13 @@ window.onscroll = () => {
 document.addEventListener('DOMContentLoaded', () => {
     const nextUrlInputs = document.querySelectorAll('input[name="_next"]');
     nextUrlInputs.forEach(input => {
-        // Append a success parameter to the URL so we can show a popup later!
+        // Use data-next attribute if specified, otherwise default to current page
+        const customTarget = input.getAttribute('data-next');
         const currentUrl = window.location.href.split('?')[0];
-        input.value = currentUrl + "?submitted=true"; 
+        const baseUrl = customTarget ? customTarget : currentUrl;
+        
+        // Append a success parameter so we can show a popup later!
+        input.value = baseUrl + (baseUrl.includes('?') ? '&' : '?') + "submitted=true"; 
     });
 
     // Check if we just came back from a successful form submission
