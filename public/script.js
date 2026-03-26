@@ -2,9 +2,11 @@
 let menuIcon = document.querySelector('#menu-icon');
 let navbar = document.querySelector('.navbar');
 
-menuIcon.onclick = () => {
-    menuIcon.classList.toggle('bx-x');
-    navbar.classList.toggle('active');
+if (menuIcon) {
+    menuIcon.onclick = () => {
+        menuIcon.classList.toggle('bx-x');
+        navbar.classList.toggle('active');
+    }
 }
 
 // scroll sections
@@ -21,10 +23,13 @@ window.onscroll = () => {
 
         if(top >= offset && top < offset + height) {
             // active navbar links
-            navLinks.forEach(links => {
-                links.classList.remove('active');
-                document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
-            });
+            if (id) {
+                navLinks.forEach(links => {
+                    links.classList.remove('active');
+                    const target = document.querySelector('header nav a[href*=' + id + ']');
+                    if (target) target.classList.add('active');
+                });
+            }
             // active sections for animation on scroll
             sec.classList.add('show-animate');
         }
@@ -40,8 +45,10 @@ window.onscroll = () => {
     header.classList.toggle('sticky', window.scrollY > 100);
 
     // remove toggle icon and navbar when click navbar links (scroll)
-    menuIcon.classList.remove('bx-x');
-    navbar.classList.remove('active');
+    if (menuIcon) {
+        menuIcon.classList.remove('bx-x');
+        navbar.classList.remove('active');
+    }
 
     // animation footer on scroll
     let footer = document.querySelector('footer');
@@ -57,7 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Use data-next attribute if specified, otherwise default to current page
         const customTarget = input.getAttribute('data-next');
         const currentUrl = window.location.href.split('?')[0];
-        const baseUrl = customTarget ? customTarget : currentUrl;
+        // Resolve relative paths (like "index.html") to full absolute URLs
+        const baseUrl = customTarget ? new URL(customTarget, window.location.href).href : currentUrl;
         
         // Append a success parameter so we can show a popup later!
         input.value = baseUrl + (baseUrl.includes('?') ? '&' : '?') + "submitted=true"; 
