@@ -33,10 +33,6 @@ window.onscroll = () => {
             // active sections for animation on scroll
             sec.classList.add('show-animate');
         }
-        // if want to animation that repeats on scroll use this
-        else {
-            sec.classList.remove('show-animate');
-        }
     });
 
     // sticky navbar
@@ -52,8 +48,9 @@ window.onscroll = () => {
 
     // animation footer on scroll
     let footer = document.querySelector('footer');
-
-    footer.classList.toggle('show-animate', this.innerHeight + this.scrollY >= document.scrollingElement.scrollHeight);
+    if (this.innerHeight + this.scrollY >= document.scrollingElement.scrollHeight) {
+        footer.classList.add('show-animate');
+    }
 }
 
 // Native form submission will now be handled directly by HTML FormSubmit action
