@@ -26,9 +26,10 @@ window.onscroll = () => {
             if (id) {
                 navLinks.forEach(links => {
                     links.classList.remove('active');
-                    const target = document.querySelector('header nav a[href*=' + id + ']');
-                    if (target) target.classList.add('active');
                 });
+                // Only highlight internal anchor links, not external page links
+                const target = document.querySelector('header nav a[href*="#' + id + '"]');
+                if (target) target.classList.add('active');
             }
             // active sections for animation on scroll
             sec.classList.add('show-animate');
@@ -78,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 3D Parallax Tilt Effect for Cards
-    const cards = document.querySelectorAll('.education-card, .project-card, .skill-card');
+    const cards = document.querySelectorAll('.education-card, .project-card, .skill-card, .blog-card');
     cards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();

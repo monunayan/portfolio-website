@@ -1360,3 +1360,591 @@ section:nth-child(odd) .animate.scroll,
     bottom: 5rem;
     opacity: 1;
 }
+
+/* ===== BLOG SECTION ===== */
+.blog-section {
+    min-height: 100vh;
+    padding: 15rem 9% 10rem;
+    background: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.blog-section h2.heading {
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 5rem;
+}
+
+.blog-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    margin-bottom: 5rem;
+    width: 100%;
+}
+
+.search-box {
+    position: relative;
+    width: 100%;
+    max-width: 48rem;
+}
+
+.search-box input {
+    width: 100%;
+    height: 4.8rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: .15rem solid rgba(0, 238, 255, 0.2);
+    border-radius: 5rem;
+    padding: 0 2rem 0 5rem;
+    font-size: 1.6rem;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.search-box input:focus {
+    border-color: var(--main-color);
+    box-shadow: 0 0 1.5rem rgba(0, 171, 240, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.search-box .search-icon {
+    position: absolute;
+    left: 1.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.2rem;
+    color: var(--main-color);
+    pointer-events: none;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.filter-btn {
+    padding: 0.8rem 2.2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--main-color);
+    background: transparent;
+    border: .15rem solid var(--main-color);
+    border-radius: 5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.03rem;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--main-color);
+    color: var(--bg-color);
+    box-shadow: 0 5px 15px rgba(0, 171, 255, 0.4);
+}
+
+/* Blog Grid Layout */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr));
+    gap: 3.5rem;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.blog-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: .15rem solid rgba(0, 238, 255, 0.2);
+    overflow: hidden;
+    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, transform 0.1s ease;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+}
+
+.blog-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--main-color);
+    box-shadow: 0 15px 35px rgba(0, 171, 255, 0.4);
+}
+
+.blog-card-image {
+    position: relative;
+    width: 100%;
+    height: 20rem;
+    overflow: hidden;
+}
+
+.blog-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.blog-card:hover .blog-card-image img {
+    transform: scale(1.08);
+}
+
+.blog-card-tag {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    background: var(--main-color);
+    color: var(--bg-color);
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 0.4rem 1.2rem;
+    border-radius: 5rem;
+    letter-spacing: 0.03rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.blog-card-content {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.blog-card-meta {
+    display: flex;
+    gap: 2rem;
+    font-size: 1.3rem;
+    color: rgba(237, 237, 237, 0.6);
+    margin-bottom: 1.5rem;
+}
+
+.blog-card-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.blog-card-meta i {
+    color: var(--main-color);
+    font-size: 1.6rem;
+}
+
+.blog-card h3 {
+    font-size: 2.1rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--text-color);
+    margin-bottom: 1.2rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.4s ease;
+}
+
+.blog-card:hover h3 {
+    color: var(--main-color);
+}
+
+.blog-card p {
+    font-size: 1.45rem;
+    line-height: 1.6;
+    color: rgba(237, 237, 237, 0.8);
+    margin-bottom: 2.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex-grow: 1;
+}
+
+.read-more-btn {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--main-color);
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+}
+
+.read-more-btn i {
+    font-size: 1.8rem;
+    transition: transform 0.3s ease;
+}
+
+.blog-card:hover .read-more-btn i {
+    transform: translateX(6px);
+}
+
+/* No blogs found styling */
+.no-blogs-found {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 8rem 2rem;
+    background: rgba(255, 255, 255, 0.01);
+    border: .15rem dashed rgba(0, 238, 255, 0.15);
+    border-radius: 2rem;
+}
+
+.no-blogs-icon {
+    font-size: 6rem;
+    color: var(--main-color);
+    margin-bottom: 2rem;
+}
+
+.no-blogs-found h3 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.no-blogs-found p {
+    font-size: 1.6rem;
+    color: rgba(237, 237, 237, 0.6);
+    max-width: 50rem;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+/* ===== IMMERSIVE BLOG MODAL ===== */
+.blog-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.blog-modal.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.blog-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(8, 27, 41, 0.85);
+    backdrop-filter: blur(10px);
+}
+
+.blog-modal-container {
+    position: relative;
+    width: 90%;
+    max-width: 85rem;
+    height: 85vh;
+    background: var(--second-bg-color);
+    border: .15rem solid rgba(0, 238, 255, 0.25);
+    border-radius: 2rem;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 2010;
+    transform: scale(0.9) translateY(40px);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.blog-modal.active .blog-modal-container {
+    transform: scale(1) translateY(0);
+}
+
+/* Reading Progress Bar */
+.progress-bar-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    z-index: 2030;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--main-color), #00ffcc);
+    box-shadow: 0 0 10px rgba(0, 171, 240, 0.5);
+    transition: width 0.1s linear;
+}
+
+/* Close Button */
+.modal-close-btn {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    width: 4.4rem;
+    height: 4.4rem;
+    border-radius: 50%;
+    background: rgba(8, 27, 41, 0.8);
+    border: .15rem solid rgba(0, 238, 255, 0.25);
+    color: var(--text-color);
+    font-size: 2.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 2020;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-close-btn:hover {
+    background: var(--main-color);
+    color: var(--bg-color);
+    border-color: var(--main-color);
+    transform: rotate(90deg) scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 171, 255, 0.5);
+}
+
+/* Modal Content Area */
+.blog-modal-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-bottom: 6rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--main-color) var(--second-bg-color);
+}
+
+.blog-modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.blog-modal-content::-webkit-scrollbar-track {
+    background: var(--second-bg-color);
+}
+
+.blog-modal-content::-webkit-scrollbar-thumb {
+    background: var(--main-color);
+    border-radius: 5rem;
+}
+
+/* Cover Image Wrapper */
+.modal-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 38rem;
+    overflow: hidden;
+}
+
+.modal-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-image-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 35%;
+    background: linear-gradient(to top, var(--second-bg-color), transparent);
+}
+
+/* Text Container */
+.modal-body-container {
+    padding: 4.5rem 6.5rem;
+}
+
+.modal-meta {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.modal-tag {
+    background: rgba(0, 171, 240, 0.12);
+    color: var(--main-color);
+    font-size: 1.3rem;
+    font-weight: 700;
+    padding: 0.5rem 1.6rem;
+    border-radius: 5rem;
+    border: .1rem solid rgba(0, 171, 240, 0.25);
+    letter-spacing: 0.03rem;
+}
+
+.modal-meta .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 1.4rem;
+    color: rgba(237, 237, 237, 0.65);
+}
+
+.modal-meta .meta-item i {
+    color: var(--main-color);
+    font-size: 1.8rem;
+}
+
+.modal-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--text-color);
+    margin-bottom: 3.5rem;
+}
+
+/* Article Styling */
+.modal-body {
+    font-size: 1.65rem;
+    line-height: 1.85;
+    color: rgba(237, 237, 237, 0.85);
+}
+
+.modal-body p {
+    margin-bottom: 2.5rem;
+}
+
+.modal-body p.lead {
+    font-size: 1.95rem;
+    line-height: 1.75;
+    color: var(--text-color);
+    font-weight: 400;
+    border-left: .3rem solid var(--main-color);
+    padding-left: 2rem;
+    margin-bottom: 3.5rem;
+}
+
+.modal-body h2 {
+    font-size: 2.4rem;
+    color: var(--main-color);
+    font-weight: 700;
+    margin: 4.5rem 0 2rem;
+    letter-spacing: 0.02rem;
+}
+
+.modal-body ul,
+.modal-body ol {
+    margin: 0 0 3rem 2.5rem;
+}
+
+.modal-body li {
+    margin-bottom: 1.2rem;
+    position: relative;
+}
+
+.modal-body blockquote {
+    border-left: .4rem solid var(--main-color);
+    background: rgba(0, 171, 240, 0.04);
+    padding: 2.5rem 3rem;
+    font-style: italic;
+    font-size: 1.85rem;
+    color: var(--text-color);
+    margin: 3.5rem 0;
+    border-radius: 0 1.2rem 1.2rem 0;
+    box-shadow: inset 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.modal-body pre {
+    background: rgba(8, 27, 41, 0.8);
+    border: .15rem solid rgba(0, 238, 255, 0.15);
+    padding: 2rem 2.5rem;
+    border-radius: 1.2rem;
+    overflow-x: auto;
+    margin: 3.5rem 0;
+    box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.modal-body code {
+    font-family: 'Consolas', 'Courier New', Courier, monospace;
+    font-size: 1.45rem;
+    color: #00ffcc;
+}
+
+.modal-body pre code {
+    color: #ededed;
+}
+
+/* Prevent parent scroll */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 991px) {
+    .blog-section {
+        padding: 12rem 4% 8rem;
+    }
+    .modal-body-container {
+        padding: 3.5rem 4.5rem;
+    }
+    .modal-title {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .blog-controls {
+        gap: 2rem;
+    }
+    .blog-modal-container {
+        height: 90vh;
+        width: 95%;
+    }
+    .modal-image-wrapper {
+        height: 28rem;
+    }
+    .modal-body-container {
+        padding: 3rem;
+    }
+    .modal-title {
+        font-size: 2.6rem;
+        margin-bottom: 2.5rem;
+    }
+    .modal-body {
+        font-size: 1.55rem;
+    }
+    .modal-body p.lead {
+        font-size: 1.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .blog-grid {
+        grid-template-columns: 1fr;
+    }
+    .filter-container {
+        gap: 1rem;
+    }
+    .filter-btn {
+        padding: 0.6rem 1.6rem;
+        font-size: 1.35rem;
+    }
+    .modal-image-wrapper {
+        height: 22rem;
+    }
+    .modal-body-container {
+        padding: 2rem;
+    }
+    .modal-title {
+        font-size: 2.2rem;
+    }
+    .modal-meta {
+        gap: 1.5rem;
+    }
+}

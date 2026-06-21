@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="images/about.png" rel="icon" type="image/x-icon">
+    <title>Blog | Monu Nayan</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="index.html" class="logo">Monu Nayan.</a>
+
+        <div class="bx bx-menu" id="menu-icon"></div>
+
+        <nav class="navbar">
+            <a href="index.html#home">Home</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#education">Education</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="index.html#skills">Skills</a>
+            <a href="index.html#contact">Contact</a>
+            <a href="blog.html" class="active">Blog</a>
+
+            <span class="active-nav"></span>
+        </nav>
+    </header>
+
+    <!-- Blog Section -->
+    <section class="blog-section" id="blog">
+        <h2 class="heading">My <span>Blog</span></h2>
+
+        <!-- Search & Filter Controls -->
+        <div class="blog-controls">
+            <div class="search-box">
+                <i class='bx bx-search search-icon'></i>
+                <input type="text" id="blogSearch" placeholder="Search articles by title, keywords...">
+            </div>
+
+            <div class="filter-container">
+                <button class="filter-btn active" data-category="all">All</button>
+                <button class="filter-btn" data-category="web-dev">Web Dev</button>
+                <button class="filter-btn" data-category="coding">Coding</button>
+                <button class="filter-btn" data-category="java">Java</button>
+                <button class="filter-btn" data-category="cs-core">CS Core</button>
+                <button class="filter-btn" data-category="exams">Competitive Exam Tips</button>
+                <button class="filter-btn" data-category="social-work">Social Work</button>
+            </div>
+        </div>
+
+        <!-- Blog Grid -->
+        <div class="blog-grid" id="blogGrid">
+            <!-- Dynamic Blog Cards will be injected here via JavaScript -->
+        </div>
+    </section>
+
+    <!-- Immersive Modal Reader -->
+    <div class="blog-modal" id="blogModal">
+        <div class="blog-modal-overlay" id="modalOverlay"></div>
+        <div class="blog-modal-container">
+            <!-- Reading Progress Bar -->
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <!-- Close Button -->
+            <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close article">
+                <i class='bx bx-x'></i>
+            </button>
+
+            <!-- Scrollable Content -->
+            <div class="blog-modal-content" id="modalContent">
+                <!-- Cover Image -->
+                <div class="modal-image-wrapper">
+                    <img id="modalCover" src="" alt="Blog Cover">
+                </div>
+
+                <!-- Text Content -->
+                <div class="modal-body-container">
+                    <div class="modal-meta">
+                        <span id="modalCategory" class="modal-tag">Category</span>
+                        <span class="meta-item"><i class='bx bx-calendar'></i> <span id="modalDate">Date</span></span>
+                        <span class="meta-item"><i class='bx bx-time-five'></i> <span id="modalReadTime">Read Time</span></span>
+                    </div>
+
+                    <h1 id="modalTitle" class="modal-title">Blog Post Title</h1>
+
+                    <div id="modalBody" class="modal-body">
+                        <!-- Post content will be dynamically injected here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-container">
+
+            <!-- Brand Column -->
+            <div class="footer-col footer-brand">
+                <a href="index.html" class="footer-logo">Monu Nayan<span>.</span></a>
+                <p class="footer-desc">A passionate Software Engineer building beautiful, fast, and functional digital experiences. Open to freelance & full-time roles.</p>
+                <p class="footer-email"><i class='bx bx-envelope'></i> monunayan22@gmail.com</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-col">
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html#home"><i class='bx bx-chevron-right'></i> Home</a></li>
+                    <li><a href="index.html#about"><i class='bx bx-chevron-right'></i> About</a></li>
+                    <li><a href="index.html#education"><i class='bx bx-chevron-right'></i> Education</a></li>
+                    <li><a href="index.html#projects"><i class='bx bx-chevron-right'></i> Projects</a></li>
+                    <li><a href="index.html#skills"><i class='bx bx-chevron-right'></i> Skills</a></li>
+                    <li><a href="blog.html"><i class='bx bx-chevron-right'></i> Blog</a></li>
+                    <li><a href="index.html#contact"><i class='bx bx-chevron-right'></i> Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Social Media -->
+            <div class="footer-col">
+                <h4 class="footer-heading">Connect With Me</h4>
+                <div class="footer-socials">
+                    <a href="https://www.facebook.com/share/16CrQks5BN/" target="_blank" class="footer-social-link" title="Facebook">
+                        <i class='bx bxl-facebook'></i>
+                        <span>Facebook</span>
+                    </a>
+                    <a href="https://x.com/MonuNayan27" target="_blank" class="footer-social-link" title="X (Twitter)">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                        <span>X (Twitter)</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/monu-nayan27/" target="_blank" class="footer-social-link" title="LinkedIn">
+                        <i class='bx bxl-linkedin'></i>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://www.instagram.com/im.mr.nayan?igsh=czFod2lrazJ2bG12" target="_blank" class="footer-social-link" title="Instagram">
+                        <i class='bx bxl-instagram'></i>
+                        <span>Instagram</span>
+                    </a>
+                    <a href="https://github.com/monunayan" target="_blank" class="footer-social-link" title="GitHub">
+                        <i class='bx bxl-github'></i>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="https://wa.me/919508052317" target="_blank" class="footer-social-link" title="WhatsApp">
+                        <i class='bx bxl-whatsapp'></i>
+                        <span>WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer Bottom Bar -->
+        <div class="footer-bottom">
+            <p>Copyright &copy; 2025 | Designed &amp; Maintained by <span>Monu Nayan</span> | All Rights Reserved</p>
+            <a href="#" class="footer-iconTop">
+                <i class='bx bx-up-arrow-alt'></i>
+            </a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="blog.js"></script>
+</body>
+
+</html>
